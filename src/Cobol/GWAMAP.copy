@@ -1,0 +1,31 @@
+      *---------------------------------------------------------------*
+      *  Licensed Materials - Property of IBM                         *
+      *  CICS XFCREQ SAMPLE - COPYBOOK GWAMAP                         *
+      *  (c) Copyright IBM Corp. 2026 All Rights Reserved             *
+      *  US Government Users Restricted Rights - Use, duplication or  *
+      *  disclosure restricted by GSA ADP Schedule Contract with      *
+      *  IBM Corp                                                     *
+      *---------------------------------------------------------------*
+      *****************************************************************
+      * NOTE:                                                         *
+      * See the assembler version of the copybook for descriptions    *
+      *                                                               *
+      * The structure and field length of this copybook must match    *
+      * those in the assembler DSECT version.                         *
+      *                                                               *
+      *****************************************************************
+      * START OF GWAMAP: MAP THE GWA FOR XFCREQ.                      *
+      *****************************************************************
+       01  GWAMAP.
+           03 GWA-EYE                  PIC X(24).
+           03 GWA-FILESET              PIC X(01).
+           03 GWA-TIME-SWITCH          PIC X(01).
+           03 GWA-FILESET-NEXT         PIC X(01).
+           03 GWA-EVENT-TIME           PIC X(13).
+           03 GWA-FILELIST.
+              05 FILLER                PIC X(08).
+              05 FILLER                PIC X(08).
+              05 FILLER                PIC X(08).
+      *****************************************************************
+      * END OF GWAMAP   COPYBOOK                                      *
+      *****************************************************************

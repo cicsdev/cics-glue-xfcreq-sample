@@ -1,0 +1,20 @@
+*---------------------------------------------------------------------*
+*  Licensed Materials - Property of IBM                               *
+*  CICS XFCREQ SAMPLE - DFHPLT SAMPLE                                 *
+*  (c) Copyright IBM Corp. 2026 All Rights Reserved                   *
+*  US Government Users Restricted Rights - Use, duplication or        *
+*  disclosure restricted by GSA ADP Schedule Contract with            *
+*  IBM Corp                                                           *
+*---------------------------------------------------------------------*
+         TITLE 'DFHPLTPI - PLTPI FOR SAMPLE XFCREQ EXIT TESTING'
+*
+         DFHPLT TYPE=INITIAL,SUFFIX=F1
+*
+* THIS VERSION IS FOR TESTING OF THE SAMPLE XFCREQ EXIT
+* - JUST START THE XFCREQ EXIT VIA PLT
+*
+         DFHPLT TYPE=ENTRY,PROGRAM=DFHDELIM
+         DFHPLT TYPE=ENTRY,PROGRAM=EXITMAIN
+*
+         DFHPLT TYPE=FINAL
+         END

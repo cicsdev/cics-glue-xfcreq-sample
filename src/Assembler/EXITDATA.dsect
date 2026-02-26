@@ -1,0 +1,33 @@
+*---------------------------------------------------------------------*
+*  Licensed Materials - Property of IBM                               *
+*  CICS XFCREQ SAMPLE - EXITDATA DSECT                                *
+*  (c) Copyright IBM Corp. 2026 All Rights Reserved                   *
+*  US Government Users Restricted Rights - Use, duplication or        *
+*  disclosure restricted by GSA ADP Schedule Contract with            *
+*  IBM Corp                                                           *
+*---------------------------------------------------------------------*
+***********************************************************************
+* NAME:  EXITDATA                                                     *
+*                                                                     *
+* DESCRIPTION: CONSTANTS USED IN THE GWAMAP & UEPTSMAP DSECTS         *
+*                                                                     *
+* VERSION: 1                                                          *
+*                                                                     *
+***********************************************************************
+UEPPGMNM DC    CL08'SMPFCREQ'                  EXIT NAME FOR CHAINING
+UEPFSETA DC    CL01'$'                         - SET A FILE PREFIX
+UEPFSETB DC    CL01'#'                         - SET B FILE PREFIX
+UEPEYEC  DC    CL24'** UEPMAP - EYECATCHER *'  UEP EYECATCHER
+*
+GWAEYEC  DC    CL24'** GWAMAP - EYECATCHER *'  GWA EYECATCHER
+GWAFSETA DC    CL01'A'                         - FILESET A IN USE
+GWAFSETB DC    CL01'B'                         - FILESET B IN USE
+GWATIMRY DC    CL01'Y'                         SWITCH BASED ON TIMER
+GWATIMRN DC    CL01'N'                         NO SWITCH BASED ON TIMER
+*
+FILELIST DS    0S                              MUST MATCH GWAFLIST
+         DC    CL08'SMPFILE1'
+         DC    CL08'SMPFILE2'
+         DC    CL08'SMPFILE3'
+FILELLEN EQU   *-FILELIST
+*
