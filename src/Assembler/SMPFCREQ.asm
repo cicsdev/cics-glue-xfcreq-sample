@@ -35,20 +35,29 @@
 * single FILESET.  This will be determined at first file access time  *
 * by using the UEPTSTOK chain to store the FILESET information.       *
 *                                                                     *
-* To achieve this the current FILESET will be defined in the GWA.     *
+* To achieve this, the current FILESET will be defined in the GWA.    *
 * A separate management task will have the ability to switch the      *
 * fileset in the GWA.                                                 *
 *                                                                     *
 * The first time a file is used by a task is deemed to be the start   *
-* time of the task.                                                   *
+* time of the task. However, if time based switching is requested     *
+* the task start time is found using the INQUIRE ASSOCIATION CICS     *
+* API Command.                                                        *
 *                                                                     *
-* First file access will be determined by check our task token area   *
-* which will be chained off UEPTSTOK.                                 *
+* If time based switching is requested (GWASWITCH=Y) the FILESET      *
+* is taken from GWAFSET if the task start time is earler than the     *
+* time specified in GWATIME. If the task start time is later,         *
+* the FILESET is taken from the GWAFSETN field.                       *
+*                                                                     *
+* Whichever mechanism is used, a task instance will only ever use     *
+* a single FILESET.                                                   *
+*                                                                     *
+* First file access will be determined by checking our task token     *
+* area which will be chained off UEPTSTOK.                            *
 *                                                                     *
 * By default, UEPTSTOK -> EISEXITT which is initialised as nulls.     *
 *                                                                     *
-*                                                                     *
-* If EISEXITT is not set then this program will access the GWA to     *
+* If EISEXITT is not set, then this program will access the GWA to    *
 * determine the current fileset and save this in our task token area. *
 * Subsequent calls to XFCREQ will use the FILESET saved our           *
 * task token area, thus ensuring consistency.                         *
