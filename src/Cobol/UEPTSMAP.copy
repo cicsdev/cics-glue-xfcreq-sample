@@ -1,0 +1,29 @@
+      *---------------------------------------------------------------*
+      *  Licensed Materials - Property of IBM                         *
+      *  CICS XFCREQ SAMPLE - COPYBOOK UEPTSMAP                       *
+      *  (c) Copyright IBM Corp. 2026 All Rights Reserved             *
+      *  US Government Users Restricted Rights - Use, duplication or  *
+      *  disclosure restricted by GSA ADP Schedule Contract with      *
+      *  IBM Corp                                                     *
+      *---------------------------------------------------------------*
+      ****************************************************************
+      * START OF UEPTSMAP: MAP THE UEPTSTOK AREA FOR XFCREQ.         *
+      ****************************************************************
+       01  UEPTSTOK.
+           03 TSTOK-NEXT               USAGE IS POINTER.
+           03 TSTOK-PROGRAM            PIC X(08) VALUE 'SMPFCREQ'.
+           03 TSTOK-EYE                PIC X(24) VALUE
+              '** UEPMAP - EYECATCHER **'.
+           03 TSTOK-FILESET            PIC X(01).
+              88 TSTOK-FILESETA        VALUE 'A'.
+              88 TSTOK-FILESETB        VALUE 'B'.
+           03 TSTOK-FILECHAR           PIC X(01).
+              88 TSTOK-FILESETA        VALUE 'A'.
+              88 TSTOK-FILESETB        VALUE 'B'.
+           03 TSTOK-START-TIME         PIC X(13).
+           03 FILLER                   PIC X(01).
+           03 TSTOK-FILENAME           PIC X(08).
+           03 TSTOK-NEWFILEN           PIC X(08).
+      ****************************************************************
+      * END OF UEPTSTOK COPYBOOK                                     *
+      ****************************************************************

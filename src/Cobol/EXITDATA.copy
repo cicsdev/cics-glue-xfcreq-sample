@@ -1,0 +1,43 @@
+      *---------------------------------------------------------------*
+      *  Licensed Materials - Property of IBM                         *
+      *  CICS XFCREQ SAMPLE - COPYBOOK EXITDATA                       *
+      *  (c) Copyright IBM Corp. 2026 All Rights Reserved             *
+      *  US Government Users Restricted Rights - Use, duplication or  *
+      *  disclosure restricted by GSA ADP Schedule Contract with      *
+      *  IBM Corp                                                     *
+      *---------------------------------------------------------------*
+      *****************************************************************
+      *       NAME: EXITDATA                                          *
+      *                                                               *
+      *       DESCRIPTION: CONSTANTS USED IN GWAMAP & EUPTSMAP        *
+      *                                                               *
+      *       VERSION: 1                                              *
+      *                                                               *
+      * NOTES:                                                        *
+      * This exit changes the first character of the filenname if     *
+      * the filename is found in the EXIT-FILELST.                    *
+      * What it it changed to is based on the EXIT-FILESET; IF        *
+      * FILESET A is used, then EXIT-FILECHARA is used. If B, then    *
+      * EXIT-FILECHARB is used.                                       *
+      *                                                               *
+      *****************************************************************
+       01 EXITDATA.
+          03 EXIT-GWAPTR              USAGE IS POINTER.
+          03 EXIT-PROGRAM             PIC X(08) VALUE 'SMPFCREQ'.
+          03 EXIT-FILESET             PIC X(01).
+             88 EXIT-FILESETA         VALUE 'A'.
+             88 EXIT-FILESETB         VALUE 'B'.
+          03 EXIT-FILENUM             PIC 9(08) VALUE 3.
+          03 EXIT-FILECHAR            PIC X(01).
+             88 EXIT-FILECHARA        VALUE '$'.
+             88 EXIT-FILECHARB        VALUE '#'.
+          03 EXIT-TIMER               PIC X(01).
+             88 EXIT-TIMER-YES        VALUE 'Y'.
+             88 EXIT-TIMER-NO         VALUE 'N'.
+          03 EXIT-GWALEN              PIC 9(04) BINARY.
+          03 EXIT-FILELIST.
+             05 FILLER                PIC X(08) VALUE 'SMPFILE1'.
+             05 FILLER                PIC X(08) VALUE 'SMPFILE2'.
+             05 FILLER                PIC X(08) VALUE 'SMPFILE3'.
+          03 EXIT-GWAEYEC             PIC X(24) VALUE
+             '** GWAMAP - EYECATCHER *'.

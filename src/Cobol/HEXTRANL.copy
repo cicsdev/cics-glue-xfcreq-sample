@@ -1,0 +1,20 @@
+      *---------------------------------------------------------------*
+      *  Licensed Materials - Property of IBM                         *
+      *  CICS XFCREQ SAMPLE - COPYBOOK HEXTRANL                       *
+      *  (c) Copyright IBM Corp. 2026 All Rights Reserved             *
+      *  US Government Users Restricted Rights - Use, duplication or  *
+      *  disclosure restricted by GSA ADP Schedule Contract with      *
+      *  IBM Corp                                                     *
+      *---------------------------------------------------------------*
+      *-------------------------------------------------------------- *
+      * BINARY TO HEX CONVERSION ROUTINE                              *
+      *                                                               *
+      * THIS IS THE LINKAGE SECTION COPYBOOK.                         *
+      *                                                               *
+      *-------------------------------------------------------------- *
+       01 HEX-LINKIN.
+          03 HEX-LINKIN-BYTE1  PIC X(01).
+
+       01 HEX-LINKOUT.
+          03 HEX-LINKOUT-BYTES PIC X(02).
+

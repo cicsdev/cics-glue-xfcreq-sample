@@ -14,3 +14,13 @@ In addition to the assembler exit which is called SMPFCREQ, there is a sample CO
 - show status of a key field in the GWA
 - update the key field in the GWA
 
+OVERVIEW OF THE CONTENT OF THIS REPOSITORY
+- /doc/documentation.pdf - detailed overview of the XFCREQ sample
+- /etc/resource/csd - contains sample DFHCSDUP definitions for a AOR/FOR configuration
+- /etc/resource/file definitions / sample JCL to create and load the sample VSAM files
+- /etc/resource/plt - sample PLTPI defintion
+- /etc/resource/sit - INITPARM definition required if EXITMAIN to used at PLTPI time
+- /src/assembler - Sample XFCREQ program and associated DSECT definitions
+- /src/Cobol - Sample EXITMAIN program and associated copybook definitions
+
+For more details on use case, solution and workings of this sample please see the documentation.pdf

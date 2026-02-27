@@ -1,0 +1,43 @@
+*---------------------------------------------------------------------*
+*  Licensed Materials - Property of IBM                               *
+*  CICS XFCREQ SAMPLE - UEPTSMAP DSECT                                *
+*  (c) Copyright IBM Corp. 2026 All Rights Reserved                   *
+*  US Government Users Restricted Rights - Use, duplication or        *
+*  disclosure restricted by GSA ADP Schedule Contract with            *
+*  IBM Corp                                                           *
+*---------------------------------------------------------------------*
+***********************************************************************
+* NAME:  UEPTSMAP                                                     *
+*                                                                     *
+* DESCRIPTION: MAP THE XFCREQ UEPTSTOK AREA USED BY XFCREQ GLUE       *
+*                                                                     *
+* VERSION: 1                                                          *
+*                                                                     *
+* CONVENTION SAYS THAT YOU CAN CHAIN STORAGE AREAS OFF UEPTSTOK       *
+* - THE FIRST FULLWORD IS THE NEXT AREA IN CHAIN                      *
+* - THE SECOND 8 BYTES IS YOUR PROGRAMS NAME SO YOU CAN LOCATE THE    *
+*   CORRECT STORAGE AREA                                              *
+* - Constants used by this DSECT are in EXITDATA                      *
+*                                                                     *
+* UEPNEXT  - Pointer to the next UEPTSTOK block in the chain.         *
+* UEPPROG  - Name of our GLUE program for future identification       *
+* UEPEYE   - Eyecatcher for the control block                         *
+* UEPFSET  - FILESET in use by this task.  Taken from the GWA.        *
+* UEPFCHAR - Character used to change first letter of filename if     *
+*            the filename is found in the GWAFLIST array.             *
+* UEPSTIME - Start time of this task                                  *
+* UEPLFILE - Last FILENAME used by this task                          *
+* UEPNFILE - New FILENAME after substitution has occurred.            *
+*                                                                     *
+***********************************************************************
+UEPTSMAP DSECT
+UEPNEXT  DS    F                               POINTER TO NEXT AREA
+UEPPROG  DS    CL08                            NAME FOR CHECKING
+UEPEYE   DS    CL24                            EYECATCHER
+UEPFSET  DS    CL01                            FILESET IN USE
+UEPFCHAR DS    CL01                            FILESET CHARACTER
+UEPSTIME DS    CL13                            TASK START TIME
+         DS    CL01
+UEPLFILE DS    CL08                            LAST FILE MATCH
+UEPNFILE DS    CL08                            NEW  FILE NAME
+UEPTSLEN EQU   *-UEPTSMAP

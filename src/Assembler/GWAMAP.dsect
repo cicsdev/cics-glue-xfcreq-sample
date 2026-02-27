@@ -1,0 +1,42 @@
+*---------------------------------------------------------------------*
+*  Licensed Materials - Property of IBM                               *
+*  CICS XFCREQ SAMPLE - GWAMAP DSECT                                  *
+*  (c) Copyright IBM Corp. 2026 All Rights Reserved                   *
+*  US Government Users Restricted Rights - Use, duplication or        *
+*  disclosure restricted by GSA ADP Schedule Contract with            *
+*  IBM Corp                                                           *
+*---------------------------------------------------------------------*
+***********************************************************************
+* NAME:  GWAMAP                                                       *
+*                                                                     *
+* DESCRIPTION: GLOBAL WORK AREA FOR THE XFCREQ FILE SWITCHING GLUE    *
+*                                                                     *
+* GWAEYE   - EYECATCHER for the control block                         *
+* GWAFSET  - Current FILESET identifier. Controls the filename to be  *
+*            used if the file is in the GWAFLIST array                *
+* GWASWTCH - Y or N to control whether time based switching is to     *
+*            occur. If Y, then GWATIME is compared with task start    *
+*            time to determine whether GWAFSET or GWAFSETN is used.   *
+* GWAFSETN - FILESET to be used for tasks starting after GWATIME      *
+* GWATIME  - TIME in format HHMMSS.TTTTTT                             *
+* GWAFLIST - List of file names that are subject to name switching    *
+*            the first character of the filename will be changed      *
+*            based on GWAFSET or GWAFSETN.                            *
+*                                                                     *
+* VERSION: 1                                                          *
+*                                                                     *
+***********************************************************************
+GWAMAP   DSECT
+GWAEYE   DS    CL24                    DSECT EYECATHER
+GWAFSET  DS    CL01                    FILESET TO USE A OR B
+GWASWTCH DS    CL01                    SWITCH AT TIME EVENT (Y/N)
+GWAFSETN DS    CL01                    SWITCH AFTER TIME EVENT
+GWATIME  DS    CL013                   SWITCH TIME HHMMSS.TTTTTT
+*
+GWAFLIST DS    0S                      LIST OF ELIGIBLE FILES
+         DS    CL08                    ADD FILES NAME
+         DS    CL08                    ADD FILES NAME
+         DS    CL08                    ADD FILES NAME
+GWAFLLEN EQU   *-GWAFLIST              LENGTH OF FILE LIST
+GWALEN   EQU   *-GWAMAP                LENGTH OF GWA
+GWAFILEN EQU   GWAFLLEN/8              NUMBER OF FILES IN LIST

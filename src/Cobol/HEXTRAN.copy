@@ -1,0 +1,63 @@
+      *---------------------------------------------------------------*
+      *  Licensed Materials - Property of IBM                         *
+      *  CICS XFCREQ SAMPLE - COPYBOOK HEXTRAN                        *
+      *  (c) Copyright IBM Corp. 2026 All Rights Reserved             *
+      *  US Government Users Restricted Rights - Use, duplication or  *
+      *  disclosure restricted by GSA ADP Schedule Contract with      *
+      *  IBM Corp                                                     *
+      *---------------------------------------------------------------*
+
+      *-------------------------------------------------------------- *
+      * BINARY TO HEX CONVERSION ROUTINE                              *
+      *                                                               *
+      * ADD THIS COPYBOOK INTO YOUR WORKING STORAGE SECTION.          *
+      * ADD COPYBOOK HEXTRANL INTO THE LINKAGE SECTION.               *
+      *                                                               *
+      * SET HEX-INADDR to the Address of the input string             *
+      * SET HEX-OUTADDR to the address of the output area             *
+      * Note: Each input byte produces 2 output bytes.                *
+      *                                                               *
+      * SET HEX-INLENGTH TO THE LENGTH OF THE INPUT DATA              *
+      *                                                               *
+      * AN INPUT AREA CONTAINING TWO BYTES OF BINARY '0A3C'           *
+      * WILL WRITE FOUR BYTES OF OUTPUT '0A3C = X'F0C1F3C3'           *
+      *                                                               *
+      *-------------------------------------------------------------- *
+      * Product or Subsystem section
+       01 HEXTABLE.
+          03 FILLER PIC X(32) VALUE '000102030405060708090A0B0C0D0E0F'.
+          03 FILLER PIC X(32) VALUE '101112131415161718191A1B1C1D1E1F'.
+          03 FILLER PIC X(32) VALUE '202122232425262728292A2B2C2D2E2F'.
+          03 FILLER PIC X(32) VALUE '303132333435363738393A3B3C3D3E3F'.
+          03 FILLER PIC X(32) VALUE '404142434445464748494A4B4C4D4E4F'.
+          03 FILLER PIC X(32) VALUE '505152535455565758595A5B5C5D5E5F'.
+          03 FILLER PIC X(32) VALUE '606162636465666768696A6B6C6D6E6F'.
+          03 FILLER PIC X(32) VALUE '707172737475767778797A7B7C7D7E7F'.
+          03 FILLER PIC X(32) VALUE '808182838485868788898A8B8C8D8E8F'.
+          03 FILLER PIC X(32) VALUE '909192939495969798999A9B9C9D9E9F'.
+          03 FILLER PIC X(32) VALUE 'A0A1A2A3A4A5A6A7A8A9AAABACADAEAF'.
+          03 FILLER PIC X(32) VALUE 'B0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF'.
+          03 FILLER PIC X(32) VALUE 'C0C1C2C3C4C5C6C7C8C9CACBCCCDCECF'.
+          03 FILLER PIC X(32) VALUE 'D0D1D2D3D4D5D6D7D8D9DADBDCDDDEDF'.
+          03 FILLER PIC X(32) VALUE 'E0E1E2E3E4E5E6E7E8E9EAEBECEDEEEF'.
+          03 FILLER PIC X(32) VALUE 'F0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF'.
+       01 FILLER REDEFINES HEXTABLE.
+          03 HEXTAB-ARRAY PIC X(02) OCCURS 256 TIMES.
+
+       01  HEX-POINTERS.
+           03 HEX-PTR1              USAGE IS POINTER VALUE NULL.
+           03 HEX-PTR1-X REDEFINES HEX-PTR1 PIC 9(09) BINARY.
+           03 HEX-PTR2              USAGE IS POINTER VALUE NULL.
+           03 HEX-PTR2-X REDEFINES HEX-PTR2 PIC 9(09) BINARY.
+
+       01  FILLER.
+           03 HEX-SUB               PIC 9(09) BINARY.
+           03 FILLER REDEFINES HEX-SUB.
+              05 FILLER             PIC X(03).
+              05 HEX-SUB-BYTE       PIC X(01).
+           03 HEX-INADDR            USAGE IS POINTER.
+           03 HEX-INADDR-X REDEFINES HEX-INADDR PIC 9(09) BINARY.
+           03 HEX-INLENGTH          PIC 9(09) COMP.
+           03 HEX-OUTADDR           USAGE IS POINTER.
+           03 HEX-OUTADDR-X REDEFINES HEX-OUTADDR PIC 9(09) BINARY.
+           03 HEX-RETCODE           PIC 9(09) COMP.

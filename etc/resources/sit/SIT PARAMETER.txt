@@ -1,0 +1,20 @@
+*---------------------------------------------------------------------*
+*  Licensed Materials - Property of IBM                               *
+*  CICS XFCREQ SAMPLE - DFHSIT INPUT                                  *
+*  (c) Copyright IBM Corp. 2026 All Rights Reserved                   *
+*  US Government Users Restricted Rights - Use, duplication or        *
+*  disclosure restricted by GSA ADP Schedule Contract with            *
+*  IBM Corp                                                           *
+*                                                                     *
+*  This INITPARM SIT parameter is required if you wish to enable the  *
+*  XFCREQ GLUE using the EXITMAIN Sample program.                     *
+*  The format is:                                                     *
+*  ENABLE - Command to be performed                                   *
+*  A      - Primary FILESET to use - A or B                           *
+*  Y      - Whether time based switching to be performed Y or N       *
+*  B      - Next FILESET to use after switch time if time based       *
+*           switching has been requested.                             *        
+*  <time> - The time in format HHMMSS.TTTTTTT after which the exit    *
+*           will use the FILESET specified by next above              *
+*---------------------------------------------------------------------*
+INITPARM=(EXITMAIN='ENABLE  A Y B 235959.999999')
