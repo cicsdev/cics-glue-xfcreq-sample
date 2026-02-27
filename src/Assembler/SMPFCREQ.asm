@@ -14,21 +14,6 @@
 *                                                                     *
 * DESCRIPTIVE NAME = Sample global user exit program for XFCREQ       *
 *                                                                     *
-*                                                                     *
-*                                                                     *
-*     Licensed Materials - Property of IBM                            *
-*                                                                     *
-*     "Restricted Materials of IBM"                                   *
-*                                                                     *
-*     5655-YA1                                                        *
-*                                                                     *
-*     (C) Copyright IBM Corp. 2001"                                   *
-*                                                                     *
-*                                                                     *
-*                                                                     *
-*                                                                     *
-* STATUS = 7.4.0                                                      *
-*                                                                     *
 * FUNCTION =                                                          *
 *                                                                     *
 *   This program provides sample processing for the File Control      *
