@@ -22,3 +22,5 @@ OVERVIEW OF THE CONTENT OF THIS REPOSITORY
 - /etc/resource/sit - INITPARM definition required if EXITMAIN to used at PLTPI time
 - /src/assembler - Sample XFCREQ program and associated DSECT definitions
 - /src/Cobol - Sample EXITMAIN program and associated copybook definitions
+
+For more details on use case, solution and workings of this sample please see the documentation.pdf
