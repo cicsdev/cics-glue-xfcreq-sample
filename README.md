@@ -1,7 +1,7 @@
 # cics-glue-xfcreq-sample
 Sample CICS file control EXEC interface API exit XFCREQ
 
-This sample exit has been created to demonstrate how a CICS filename passed to CICS by an application program can be redirected to a different filename at the XFCREQ global user exit point. The exit uses fields in the Global Work Area (GWA) to indicate which files should be changed and how. This allows multiple tasks to be consistent in the which files should be used at any one time. Further details on the design of the exit are included in the [documentation.pdf](doc/documentation.pdf).
+This sample exit has been created to demonstrate how a CICS filename passed to CICS by an application program can be redirected to a different filename at the XFCREQ global user exit (GLUE) point. The exit uses fields in the Global Work Area (GWA) to indicate which files should be changed and how. This allows multiple tasks to be consistent in the which files should be used at any one time. Further details on the design of the exit are included in the [documentation.pdf](doc/documentation.pdf).
 
 In addition to the assembler exit [SMPFCREQ](src/Assembler/SMPFCREQ.asm), there is a sample COBOL program called [EXITMAIN](src/Cobol/EXITMAIN.cbl) which has been written to demonstrate:
 - Enabling the exit with a GWA
