@@ -12,11 +12,11 @@ In addition to the assembler exit [SMPFCREQ](src/Assembler/SMPFCREQ.asm), there 
 
 OVERVIEW OF THE CONTENT OF THIS REPOSITORY
 - [/doc/documentation.pdf](doc/documentation.pdf) - Detailed overview of the XFCREQ sample
-- [/etc/resource/csd]() - Sample DFHCSDUP definitions for an AOR/FOR configuration
-- [/etc/resource/file]() Sample JCL to create and load the sample VSAM files
-- [/etc/resource/plt]() - Sample PLTPI defintion
-- [/etc/resource/sit]() - SIT INITPARM definition required if EXITMAIN to be used at PLTPI time
-- [/src/assembler]() - Sample XFCREQ program and associated DSECTs
-- [/src/Cobol]() - Sample EXITMAIN program and associated copybooks 
+- [/etc/resource/csd](etc/resource/csd) - Sample DFHCSDUP definitions for an AOR/FOR configuration
+- [/etc/resource/files](etc/resource/files) Sample JCL to create and load the sample VSAM files
+- [/etc/resource/plt](etc/resource/plt) - Sample PLTPI defintion
+- [/etc/resource/sit](etc/resource/sit) - SIT INITPARM definition required if EXITMAIN to be used at PLTPI time
+- [/src/assembler](src/assembler) - Sample XFCREQ program and associated DSECTs
+- [/src/Cobol](src/Cobol) - Sample EXITMAIN program and associated copybooks 
 
 For more details on use case, solution and workings of this sample please see the [documentation.pdf](/doc/documentation.pdf)
