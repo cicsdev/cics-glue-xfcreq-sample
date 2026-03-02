@@ -16,7 +16,7 @@ OVERVIEW OF THE CONTENT OF THIS REPOSITORY
 - [/etc/resources/files](etc/resources/files) Sample JCL to create and load the sample VSAM files
 - [/etc/resources/plt](etc/resources/plt) - Sample PLTPI defintion
 - [/etc/resources/sit](etc/resources/sit) - SIT INITPARM definition required if EXITMAIN to be used at PLTPI time
-- [/src/assembler](src/assembler) - Sample XFCREQ program and associated DSECTs
+- [/src/Assembler](src/Assembler) - Sample XFCREQ program and associated DSECTs
 - [/src/Cobol](src/Cobol) - Sample EXITMAIN program and associated copybooks 
 
 For more details on use case, solution and workings of this sample please see the [documentation.pdf](/doc/documentation.pdf)
