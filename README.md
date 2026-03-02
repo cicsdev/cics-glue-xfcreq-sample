@@ -10,7 +10,7 @@ In addition to the assembler exit [SMPFCREQ](src/Assembler/SMPFCREQ.asm), there 
 - Show status of a key field in the GWA
 - Update the key field in the GWA
 
-OVERVIEW OF THE CONTENT OF THIS REPOSITORY
+## Contents of the repository
 - [/doc/documentation.pdf](doc/documentation.pdf) - Detailed overview of the XFCREQ sample
 - [/etc/resources/csd](etc/resources/csd) - Sample DFHCSDUP definitions for an AOR/FOR configuration
 - [/etc/resources/files](etc/resources/files) Sample JCL to create and load the sample VSAM files
