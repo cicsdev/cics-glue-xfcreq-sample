@@ -167,10 +167,15 @@ SMPFCREQ CSECT
          MVC   MSGXLEN,=H'50'
          WTO   TEXT=MSGX,MF=(E,WTOLIST)
 ***********************************************************************
+*    Set up addressability to the EIB                                 *
 *    Check whether we have a GWA                                      *
 *    - A value is 0 mean a GWA wasn't requested when exit enabled.    *
 *    - Then check the length is as expected based on our GWAMAP length*
 ***********************************************************************
+         WTO   'XFCREQ: ADDRESSING THE EIB'                            
+*                                                                      
+         EXEC  CICS ADDRESS EIB(DFHEIBR)                               
+*                                                                      
          WTO   'XFCREQ: CHECKING GWA ADDRESS'
 *
          L     R4,UEPGAA                 Load address of GWA
