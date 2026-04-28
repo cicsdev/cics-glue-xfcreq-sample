@@ -128,8 +128,11 @@ SMPFCREQ RMODE ANY
 MSGX     DS    0H
 MSGXLEN  DS    H                         Dynamic area for WTO MF=E
 MSGXMSG  DS    CL50                      Length of messages
-         ORG   MSGXMSG+22                Par to be altered
+         ORG   MSGXMSG+22                Part to be altered
 MSGXNAM  DS    CL8                       altered 8 bytes
+         ORG   MSGXMSG+22                Part to be altered
+MSGXTIM  DS    CL13                      altered 13 bytes
+         ORG                                             
          ORG
 *
 MINISAVE DS    5F                        Mini save area
@@ -145,7 +148,12 @@ FMATCH   DS    CL1                       File match found in GWA
 LOWS     DC    XL1'00'                   File match found in GWA
          DS    0D                        Doubleword align
 *
-         DFHEIEND                        End working storage
+MYSTART  DS    CL21                      My formatted start datetime    
+         ORG   MYSTART                                                  
+MYSDATE  DS    CL08                      Start date - YYYYMMDD          
+MYSTIME  DS    CL13                      Start time - HHMMSS.NNNNNN     
+         ORG                                                            
+*                                                                       
          EJECT
 ***********************************************************************
 ***                                                                 ***
@@ -296,9 +304,8 @@ RETURN_TO_CICS DS 0H
 *    WTO to say exit from exit                                        *
 ***********************************************************************
          WTO   'XFCREQ: EXIT'
-         LA     R15,UERCNORM             No errors
-         DFHEIRET RCREG=15               Return with rc in R15
-*
+         EXEC CICS RETURN
+*         
          EJECT
 ***********************************************************************
 * Subroutines                                                         *
@@ -333,50 +340,77 @@ SCANFND  DS    0H
 *    - Save the address in OURTSTOK                                   *
 *    - Dont save address in EISEXITT, this will be done by TSTOKADD   *
 ***********************************************************************
-TSTOKALC DS    0H
-         WTO   'XFCREQ: ALLOCATING TASK TOKEN BLOCK'
-         MVC   GETMLEN,=AL4(UEPTSLEN)
-*
-         EXEC CICS GETMAIN SET(R9) FLENGTH(GETMLEN)                    X
-                   RESP(CICSRESP) INITIMG(LOWS)
-*
-         CLC   CICSRESP,DFHRESP(NORMAL)  Check response
-         BNE   STG_ERR                   Getmain failed
-         WTO   'XFCREQ: GETMAIN FOR TASK TOKEN BLOCK SUCCESSFUL'
-         ST    R9,OURTSTOK               Load the address of our area
-         ST    R9,INVAL                  Save in WS
-         BAL   R2,DISPADDR               Branch to display routine
-*
-         USING UEPTSMAP,R9               Addressability to our TSTOK
-         L     R4,UEPGAA                 Load GWA Address
-         USING GWAMAP,R4                 Set addressability to GWA
-         MVC   UEPPROG,UEPPGMNM          Save name of program
-         MVC   UEPFSET,GWAFSET           Save which fileset to use
-         MVC   UEPEYE,UEPEYEC            Move in the eyecatcher
-*
-         MVC   MSGXMSG,MSG5              File set message
-         MVC   MSGXLEN,=H'50'            length of message
-*
-         CLC   UEPFSET,GWAFSETA          Is it fileset A
-         JNE   TOKALC1                   No, its fileset B
-         MVC   UEPFCHAR,UEPFSETA         SET FILESET A mask value
-         MVC   MSGXNAM,FILESETA          Indicate fileset A used
-         B     TOKMSG
-*
-TOKALC1  DS    0H
-         MVC   UEPFCHAR,UEPFSETB         SET FILESET B mask value
-         MVC   MSGXNAM,FILESETB          Indicate fileset B used
-*
-TOKMSG   DS    0H
-         WTO   TEXT=MSGX,MF=(E,WTOLIST)  Issue the message
-         BR    R5                        Return to caller
-*
-STG_ERR  DS    0H
-         WTO   'XFCREQ: ERROR GETMAINING TASK TOKEN BLOCK'
-         B     RETURN_TO_CICS            Return control to CICS
-*
-         DROP  R4                        Drop addressability to GWA
-         DROP  R9                        Drop addressability to TSTOK
+TSTOKALC DS    0H                                                      
+         WTO   'XFCREQ: ALLOCATING TASK TOKEN BLOCK'                   
+         MVC   GETMLEN,=AL4(UEPTSLEN)                                  
+*                                                                      
+         EXEC CICS GETMAIN SET(R9) FLENGTH(GETMLEN)                    
+                   RESP(CICSRESP) INITIMG(LOWS)                        
+*                                                                      
+         CLC   CICSRESP,DFHRESP(NORMAL)  Check response                
+         BNE   STG_ERR                   Getmain failed                
+         WTO   'XFCREQ: GETMAIN FOR TASK TOKEN BLOCK SUCCESSFUL'       
+         ST    R9,OURTSTOK               Load the address of our area  
+         ST    R9,INVAL                  Save in WS                    
+         BAL   R2,DISPADDR               Branch to display routine     
+*                                                                      
+         EXEC CICS INQUIRE ASSOCIATION(EIBTASKN)                       
+                   STARTTIME(MYSTART) RESP(CICSRESP)                   
+*                                                                      
+         CLC   CICSRESP,DFHRESP(NORMAL)  Check response                
+         BNE   ASOC_ERR                  Inquire failed                
+*                                                                      
+         MVC   MSGXMSG,MSG6              Task start time               
+         MVC   MSGXLEN,=H'50'            length of message             
+         MVC   MSGXTIM,MYSTIME           Move in start time            
+         WTO   TEXT=MSGX,MF=(E,WTOLIST)  Issue the message             
+*                                                                      
+         USING UEPTSMAP,R9               Addressability to our TSTOK   
+         L     R4,UEPGAA                 Load GWA Address              
+         USING GWAMAP,R4                 Set addressability to GWA     
+         MVC   UEPPROG,UEPPGMNM          Save name of program          
+         MVC   UEPFSET,GWAFSET           Save which fileset to use     
+         MVC   UEPEYE,UEPEYEC            Move in the eyecatcher        
+         MVC   UEPSTIME,MYSTIME          Save start time in task area  
+*                                                                      
+         MVC   MSGXMSG,MSG5              File set message              
+         MVC   MSGXLEN,=H'50'            length of message             
+*                                                                      
+         CLC   GWASWTCH,GWATIMRN         Fileset based on time?        
+         BE    TOKALC0                   No, set based on GWAFSET      
+*                                                                      
+         WTO   'XFCREQ: TIME BASED SWITCH REQUESTED'                   
+                                                                       
+         CLC   GWATIME,MYSTIME           Did I start before cutover    
+         BH    TOKALC0                   No, we're earlier             
+         WTO   'XFCREQ: TASK USING POST SWITCH TIME FILESET'           
+         MVC   UEPFSET,GWAFSETN          Override to use new fileset   
+*                                                                      
+TOKALC0  DS    0H                                                     
+         CLC   UEPFSET,GWAFSETA          Is it fileset A              
+         JNE   TOKALC1                   No, its fileset B            
+         MVC   UEPFCHAR,UEPFSETA         SET FILESET A mask value     
+         MVC   MSGXNAM,FILESETA          Indicate fileset A used      
+         B     TOKMSG                                                 
+*                                                                     
+TOKALC1  DS    0H                                                     
+         MVC   UEPFCHAR,UEPFSETB         SET FILESET B mask value     
+         MVC   MSGXNAM,FILESETB          Indicate fileset B used      
+*                                                                     
+TOKMSG   DS    0H                                                     
+         WTO   TEXT=MSGX,MF=(E,WTOLIST)  Issue the message            
+         BR    R5                        Return to caller             
+*                                                                     
+STG_ERR  DS    0H                                                     
+         WTO   'XFCREQ: ERROR GETMAINING TASK TOKEN BLOCK'            
+         B     RETURN_TO_CICS            Return control to CICS       
+*                                                                     
+ASOC_ERR DS    0H                                                     
+         WTO   'XFCREQ: INQUIRE ASSOCIATION FAILED       '            
+         B     RETURN_TO_CICS            Return control to CICS       
+*                                                                     
+         DROP  R4                        Drop addressability to GWA   
+         DROP  R9                        Drop addressability to TSTOK 
 ***********************************************************************
 * TSTOKFND: Find our UEPTSTOK Block.                                  *
 *    - Our TSTOK could be pointed to by EISEXITT or chained off it    *
@@ -497,11 +531,12 @@ MSG2     DC  CL50'XFCREQ: SWITCHING TO: XXXXXXXX'
 MSG3     DC  CL50'XFCREQ: HEX VALUE IS: XXXXXXXX'
 MSG4     DC  CL50'XFCREQ: PROGRAM NAME: XXXXXXXX'
 MSG5     DC  CL50'XFCREQ: TASK FILESET: XXXXXXXX'
+MSG6     DC  CL50'XFCREQ: TASK STARTED: HHMMSS.TTTTTT'
 *
          COPY  EXITDATA                  Constants for DSECTS
 *
+         LTORG
 ***********************************************************************
 * End of SMPFCREQ                                                     *
 ***********************************************************************
-         DROP
          END SMPFCREQ
